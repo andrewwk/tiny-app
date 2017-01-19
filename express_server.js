@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser')
 const flash        = require('connect-flash')
 const app          = express()
 const bodyParser   = require('body-parser')
+const bcrypt       = require('bcrypt');
 const PORT         = process.env.PORT || 8080 // default port 8080
 
 const urlDB = {
@@ -15,7 +16,7 @@ const urlDB = {
 
 const generateRandomString = () => {
   let text = ''
-  const charset = 'abcdefghijklmnopqrstuvwxyz0123456789/?<>:;{}[]'
+  const charset = 'abcdefghijklmnopqrstuvwxyz0123456789'
 
   for (let i = 0; i < 10; i++ ) {
     text += charset.charAt(Math.floor(Math.random() * charset.length))
@@ -55,10 +56,10 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.get('/', (req, res) => res.redirect('/login'))
 
 app.get('/login',(req, res) => {
-  let locals = { user_id: req.cookies['user_id'] }
-  if (locals.email) {
-    res.redirect('/urls')
-  }
+  let locals = {
+    user_id: req.cookies['user_id'],
+    users: users
+   }
   res.render('login', locals)
 });
 
@@ -66,15 +67,11 @@ app.post('/login', (req, res) => {
   let email = req.body.email
   let password = req.body.password
   let user = checkEmail(email)
-  console.log("user", user);
-  console.log("email", email);
-
   let user_id = ""
   if (user && (user.password === password)) {
-    user_id = user.user_id
-    console.log("user_id", user_id)
+    user_id = user.id
     let cookie = res.cookie('user_id', user_id)
-    res.redirect('/urls')
+    res.redirect('/')
   } else {
     res.sendStatus(403)
   }
@@ -88,13 +85,12 @@ app.post('/register', (req, res) => {
   let email = req.body.email
   let password = req.body.password
   let user_id = generateRandomString()
-  console.log(checkEmail(email));
   if (!checkEmail(email)) {
-    users[user_id] = { user_id: {
+    users[user_id] = {
       id: user_id,
       email: email,
       password: password
-    }}
+    }
     let cookie = res.cookie('user_id', user_id)
     res.redirect('/')
   } else {
@@ -103,15 +99,14 @@ app.post('/register', (req, res) => {
 })
 
 app.get('/register', (req, res) => {
-  let locals = {
-    user_id: req.cookies['user_id']
-  }
+  let locals = { user_id: req.cookies['user_id'] }
   res.render('register', locals)
 })
 
 app.get('/urls', (req, res) => {
   let locals = {
     urls: urlDB,
+    users: users,
     message: req.flash('info'),
     user_id: req.cookies['user_id']
   }
@@ -143,6 +138,7 @@ app.post('/urls/:id/delete', (req, res) => {
 
 app.get('/urls/:id', (req, res) => {
   let locals = {
+    users: users,
     shortURL: req.params.id,
     user_id: req.cookies['user_id']
   }

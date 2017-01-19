@@ -10,7 +10,7 @@
 
     <% if (user_id) { %> %>
       <div class="container-current-user">
-        Welcome: <%= user_id.email %>
+        Welcome: <%= locals.users[user_id].email %>
         <form action="/logout" method="post">
           <button type="submit" name="logout" class="nav-button">Logout</button>
         </form>
