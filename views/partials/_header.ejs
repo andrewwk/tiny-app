@@ -1,0 +1,37 @@
+<link rel="stylesheet" href="/stylesheets/styles.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+
+<div class="container">
+
+  <div class="container-header">
+    <h1>Andrew's Tiny App</h1>
+
+    <% if (user_id) { %> %>
+      <div class="container-current-user">
+        Welcome: <%= user_id.email %>
+        <form action="/logout" method="post">
+          <button type="submit" name="logout" class="nav-button">Logout</button>
+        </form>
+      </div>
+    <% } %>
+    <% if (!user_id) { %> %>
+      <div class="container-current-user">
+        <form action="/register" method="get">
+          <button type="submit" name="register" class="nav-button">Register</button>
+        </form>
+      </div>
+    <% } %>
+    <div class="container-nav">
+      <form action="/urls" method="get">
+        <button type="submit" name="button" class="material-icons nav-button">home</button>
+      </form>
+      <form action="/urls/new" method="get">
+        <button type="submit" name="button" class="material-icons nav-button">create</button>
+      </form>
+    </div>
+
+
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Andrew's Tiny App</title>
+  <link rel="stylesheet" href="/stylesheets/styles.css">
+</head>
+<body>
+  <% include ./partials/_header.ejs %>
+  <div class="container-update">
+    <h2>Short URL: <%= locals.shortURL %></h2>
+    <form method="post" action="/urls/<%= locals.shortURL %>"style="display: inline;">
+    <input type="text" name="updated_url">
+    <button type="submit" name="button">Update</button>
+  </div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <% include ./partials/_header.ejs %>
+    <% if (!user_id) { %> %>
+      <div class="container-login">
+          <h2>Login</h2>
+        <form action="/login" method="post">
+          <input type="text" name="email" placeholder="email" style="width: 60%">
+          <input type="password" name="password" placeholder="password" style="width: 60%">
+          <button type="submit" name="button" class="login-submit button" style="width: 60%">
+            Submit
+          </button>
+      </div>
+    </form>
+      <a href='/register' style="font-size: 2em">Register</a>
+    <% } %>
+  </div>
+
+
+  </body>
+</html>

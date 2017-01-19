@@ -1,0 +1,120 @@
+body {
+  background-image: url('../background_image.jpg');
+  color: white;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+table, th {
+  width: 100px;
+}
+
+th, td {
+  padding: 15px;
+}
+.nav-button {
+  border: solid;
+  border-radius: 10px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 0.75em;
+}
+
+.register-button {
+  border: solid;
+  border-radius: 10px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  /*display: inline-block;*/
+  font-size: 0.75em;
+}
+
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    border-radius: 10px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.container-current-user {
+  align-items: center;
+  font-size: 2em;
+  display: inline-block;
+}
+
+.container-register {
+  align-items: center;
+  text-align: center;
+}
+
+.container-header {
+  margin: auto;
+  width: 60%;
+  /*border: 3px solid white;*/
+  padding: 10px;
+  text-align: center;
+}
+
+.container-login {
+  margin: auto;
+  width: 80%;
+  padding: 10px;
+  text-align: center;
+  align-items: center;
+}
+
+.container-update .container-new-url, input {
+  width: 100%;
+  height: 3em;
+
+}
+
+.container-update .container-new-url, input[placeholder] {
+  font-size: 1em;
+}
+.container-update .container-new-url {
+  align-items: center;
+  text-align: center;
+}
+
+.container-nav {
+  font-size: 2em;
+  padding-left: 38em;
+  padding-right: 2em;
+}
+
+.container-delete-message {
+  align-items: center;
+  text-align: center;
+  font-size: 2.5em;
+}
+
+table {
+  margin: auto;
+  width: 60%;
+  border: 3px solid white;
+  padding: 10px;
+  text-align: center;
+}
+
+button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline:none;
+}

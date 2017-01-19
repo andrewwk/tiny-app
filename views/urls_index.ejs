@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Andrew's Tiny App</title>
+</head>
+<body>
+  <% include ./partials/_header.ejs %>
+
+<div class="container-delete-message">
+  <% if (message) { %>
+    <strong><p><%= message %></p></strong>
+    <% } %>
+</div>
+<% if (user_id) { %>
+  <div class="container">
+    <table>
+      <caption><h1>URLS</h1></caption>
+      <tr>
+        <th>Short URL</th>
+        <th>Full URL</th>
+        <th>Edit/Delete</th>
+      </tr>
+      <tr>
+        <% for (url in locals.urls) { %>
+        <td><%= url %></td>
+        <td><%= locals.urls[url] %></td>
+        <td>
+          <button type="button" name="button" class="fa fa-pencil" aria-hidden="true">
+            <strong><a href="/urls/<%= url %>">Edit</a></strong>
+          </button>
+          <form method="post" action="/urls/<%= url %>/delete" style="display: inline;">
+            <button type="submit" name="button" class="fa fa-trash" aria-hidden="true">
+              <strong>Delete</strong>
+            </button>
+          </form>
+        </td>
+      </tr>
+      <% } %>
+    </table>
+  </div>
+<% } else { %>
+  <div class="container-delete-message">
+      <h1>YOU HAVE TO BE LOGGED IN TO SEE THE URLS DUMMY!</h1>
+  </div>
+<% } %>
+</body>
+</html>
