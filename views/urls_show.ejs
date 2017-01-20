@@ -6,11 +6,28 @@
 </head>
 <body>
   <% include ./partials/_header.ejs %>
+  <div class="container-message">
+    <% if (message) { %>
+      <strong><p><%= message %></p></strong>
+      <% } %>
+  </div>
   <div class="container-update">
-    <h2>Short URL: <%= locals.shortURL %></h2>
-    <form method="post" action="/urls/<%= locals.shortURL %>"style="display: inline;">
-    <input type="text" name="updated_url">
-    <button type="submit" name="button">Update</button>
+    <div class="container-shorturl">
+      <h2>Short URL: <%= shortURL %></h2>
+    </div>
+    <div class="">
+      <form method="post" action="/urls/<%= locals.shortURL %>"style="display:block;">
+        <input type="text" name="updated_url" style="width: 80%" placeholder="<%= users[user_id].urls[shortURL] %>">
+        <button type="submit" name="button" style="display: inline-block">
+          <strong>Update</strong>
+        </button>
+      </form>
+    </div>
+    <form method="post" action="/urls/<%= url %>/delete" style="display:block;">
+      <button type="submit" name="button" class="fa fa-trash" aria-hidden="true">
+        <strong>Delete</strong>
+      </button>
+    </form>
   </div>
 </body>
 </html>

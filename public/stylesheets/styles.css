@@ -24,6 +24,7 @@ th, td {
   text-decoration: none;
   display: inline-block;
   font-size: 0.75em;
+  max-width: 145px;
 }
 
 .register-button {
@@ -59,7 +60,7 @@ th, td {
   align-items: center;
   text-align: center;
 }
-.container-register .container-login {
+.container-register .container-form {
   align-items: center;
   text-align: center;
 }
@@ -72,10 +73,15 @@ th, td {
   text-align: center;
 }
 
-.container-login {
+.container-form {
   margin: auto;
   width: 80%;
   padding: 10px;
+  text-align: center;
+  align-items: center;
+}
+
+.container-form, input[placeholder] {
   text-align: center;
   align-items: center;
 }
@@ -96,14 +102,25 @@ th, td {
 
 .container-nav {
   font-size: 2em;
-  padding-left: 38em;
-  padding-right: 2em;
+  padding-left: 10%;
+  /*padding-right: 2em;*/
+  float: right
 }
 
-.container-delete-message {
+.container-message {
   align-items: center;
   text-align: center;
   font-size: 2.5em;
+}
+
+.container-update {
+  align-items: center;
+  text-align: center;
+  font-size: 2.5em;
+}
+.container-shorturl {
+  align-items: center;
+  text-align: center;
 }
 
 table {

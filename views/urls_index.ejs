@@ -6,46 +6,51 @@
 <body>
   <% include ./partials/_header.ejs %>
 
-<div class="container-delete-message">
-  <% if (message) { %>
-    <strong><p><%= message %></p></strong>
-    <% } %>
-</div>
-<% if (user_id) { %>
-  <div class="container">
-    <table>
-      <caption><h1>URLS</h1></caption>
-      <tr>
-        <th>Short URL</th>
-        <th>Full URL</th>
-        <th>Edit/Delete</th>
-      </tr>
-      <tr>
-        <% let urls = locals.users[user_id].urls %>
-          <% for (url in urls) { %>
-            <% if (urls.length < 1) { %>
-            <h2>You have no links! <br> Go create one! </h2>
-            <% } %>
-          <td><%= url %></td>
-          <td><%= urls[url] %></td>
-          <td>
-            <button type="button" name="button" class="fa fa-pencil" aria-hidden="true">
-              <strong><a href="/urls/<%= url %>">Edit</a></strong>
-            </button>
-            <form method="post" action="/urls/<%= url %>/delete" style="display: inline;">
-              <button type="submit" name="button" class="fa fa-trash" aria-hidden="true">
-                <strong>Delete</strong>
-              </button>
-            </form>
-          </td>
-      </tr>
+  <div class="container-message">
+    <% if (message) { %>
+      <strong><p><%= message %></p></strong>
+      <% } %>
+  </div>
+    <% if (user_id) { %>
+      <div class="container">
+        <table>
+          <caption><h1>URLS</h1></caption>
+          <tr>
+            <th>Short URL</th>
+            <th>Full URL</th>
+            <th>Edit/Delete</th>
+          </tr>
+          <tr>
+          <% let urls = locals.users[user_id].urls %>
+          <% if (Object.keys(urls).length === 0) { %>
+            <div class="container-message">
+              <h2>You have no links! <br> Go create one! </h2>
+            </div>
           <% } %>
-    </table>
-  </div>
-<% } else { %>
-  <div class="container-delete-message">
-      <h1>YOU HAVE TO BE LOGGED IN TO SEE THE URLS DUMMY!</h1>
-  </div>
-<% } %>
+          <% for (url in urls) { %>
+            <td><%= url %></td>
+            <td><%= urls[url] %></td>
+            <td>
+              <form action="/urls/<%= url %>" method="get">
+                <button type="submit" name="button" class="fa fa-pencil" aria-hidden="true" style="display: inline-block">
+                  <strong>Edit</strong>
+                </button>
+              </form>
+              <form method="post" action="/urls/<%= url %>/delete" style="display: inline-block;">
+                <button type="submit" name="button" class="fa fa-trash" aria-hidden="true">
+                  <strong>Delete</strong>
+                </button>
+              </form>
+            </td>
+          </tr>
+          <% } %>
+        </table>
+      </div>
+    <% } %>
+    <% if (!user_id) { %>
+      <div class="container-message">
+        <h1>YOU HAVE TO BE LOGGED IN TO SEE THE URLS DUMMY!</h1>
+      </div>
+    <% } %>
 </body>
 </html>

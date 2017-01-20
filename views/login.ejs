@@ -2,29 +2,27 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Login to Andrew's Tiny App</title>
     <link rel="stylesheet" href="/stylesheets/styles.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
   </head>
   <body>
-  <div class="container-header">
-    <h1>Andrew's Tiny App</h1>
+    <div class="container-header">
+      <h1>Andrew's Tiny App</h1>
+    </div>
+    <div class="container-form">
+      <h2>Login</h2>
+      <form action="/login" method="post">
+        <input type="email" name="email" placeholder="email" style="width: 60%">
+        <input type="password" name="password" placeholder="password" style="width: 60%">
+        <button type="submit" name="button" class="login-submit button" style="width: 60%">
+          Submit
+        </button>
+      </form>
+    </div>
   </div>
-      <div class="container-login">
-          <h2>Login</h2>
-        <form action="/login" method="post">
-          <input type="text" name="email" placeholder="email" style="width: 60%">
-          <input type="password" name="password" placeholder="password" style="width: 60%">
-          <button type="submit" name="button" class="login-submit button" style="width: 60%">
-            Submit
-          </button>
-        </form>
-      </div>
-      <a href='/register' style="font-size: 2em">Register</a>
-  </div>
-
-
+  <a href='/register' style="font-size: 2em">Register</a>
   </body>
 </html>

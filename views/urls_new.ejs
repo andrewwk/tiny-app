@@ -6,13 +6,13 @@
   <% include ./partials/_header.ejs %>
   <% if (user_id) { %>
     <div class="container-new-url">
-      <form action="/urls/create" method="POST" style="margin:150px;">
-        <input type="text" name="longURL" placeholder="http://">
+      <form action="/urls" method="POST" style="margin:150px;">
+        <input type="text" name="longURL" placeholder="http://www.exampleurl.com">
         <button type="submit" name="submit" class="button">Create</button>
       </form>
     </div>
   <% } else { %>
-    <div class="container-delete-message">
+    <div class="container-message">
         <h1>YOU HAVE TO BE LOGGED IN TO CREATE A NEW SHORT URL JACKASS!</h1>
     </div>
   <% } %>
