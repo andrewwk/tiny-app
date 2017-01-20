@@ -59,6 +59,10 @@ th, td {
   align-items: center;
   text-align: center;
 }
+.container-register .container-login {
+  align-items: center;
+  text-align: center;
+}
 
 .container-header {
   margin: auto;

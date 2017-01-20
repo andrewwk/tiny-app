@@ -21,21 +21,25 @@
         <th>Edit/Delete</th>
       </tr>
       <tr>
-        <% for (url in locals.urls) { %>
-        <td><%= url %></td>
-        <td><%= locals.urls[url] %></td>
-        <td>
-          <button type="button" name="button" class="fa fa-pencil" aria-hidden="true">
-            <strong><a href="/urls/<%= url %>">Edit</a></strong>
-          </button>
-          <form method="post" action="/urls/<%= url %>/delete" style="display: inline;">
-            <button type="submit" name="button" class="fa fa-trash" aria-hidden="true">
-              <strong>Delete</strong>
+        <% let urls = locals.users[user_id].urls %>
+          <% for (url in urls) { %>
+            <% if (urls.length < 1) { %>
+            <h2>You have no links! <br> Go create one! </h2>
+            <% } %>
+          <td><%= url %></td>
+          <td><%= urls[url] %></td>
+          <td>
+            <button type="button" name="button" class="fa fa-pencil" aria-hidden="true">
+              <strong><a href="/urls/<%= url %>">Edit</a></strong>
             </button>
-          </form>
-        </td>
+            <form method="post" action="/urls/<%= url %>/delete" style="display: inline;">
+              <button type="submit" name="button" class="fa fa-trash" aria-hidden="true">
+                <strong>Delete</strong>
+              </button>
+            </form>
+          </td>
       </tr>
-      <% } %>
+          <% } %>
     </table>
   </div>
 <% } else { %>

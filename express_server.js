@@ -1,18 +1,12 @@
-const express      = require('express')
-const session      = require('express-session')
-const cookieParser = require('cookie-parser')
-const flash        = require('connect-flash')
-const app          = express()
-const bodyParser   = require('body-parser')
-const bcrypt       = require('bcrypt');
-const PORT         = process.env.PORT || 8080 // default port 8080
-
-const urlDB = {
-  'b2xVn2': 'http://www.lighthouselabs.ca',
-  '9sm5xK': 'http://www.google.com',
-  '82mcynywjz': 'http://www.motorauthority.com',
-  'jpcmoo2ae4': 'http://www.anandtech.com'
-}
+const express       = require('express')
+const cookieSession = require('cookie-session')
+const session       = require('express-session')
+const cookieParser  = require('cookie-parser')
+const flash         = require('connect-flash')
+const app           = express()
+const bodyParser    = require('body-parser')
+const bcrypt        = require('bcrypt');
+const PORT          = process.env.PORT || 8080 // default port 8080
 
 const generateRandomString = () => {
   let text = ''
@@ -25,10 +19,21 @@ const generateRandomString = () => {
 }
 
 const users = {
-  1: {
-    id: 1,
+  '1': {
+    id: '1',
     email: 'andrew@test.com',
-    password: 'password'
+    password: 'password',
+    urls:
+      {'82mcynywjz': 'http://www.motorauthority.com',
+      'jpcmoo2ae4': 'http://www.anandtech.com'}
+  },
+  '1234': {
+    id: '1234',
+    email: 'thor@asgard.com',
+    password: 'odin',
+    urls:
+      {'b2xVn2': 'http://www.lighthouselabs.ca',
+      '9sm5xK': 'http://www.google.com'}
   }
 }
 
@@ -42,6 +47,12 @@ const checkEmail = (email) => {
 }
 
 app.set('view engine', 'ejs')
+
+app.use(cookieSession({
+  name: 'session',
+  keys: ['uber_supersecret_secret'],
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}))
 app.use(cookieParser('supasecret_secret'))
 app.use(session({
   cookie: { maxAge: 60000 },
@@ -56,11 +67,11 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.get('/', (req, res) => res.redirect('/login'))
 
 app.get('/login',(req, res) => {
-  let locals = {
-    user_id: req.cookies['user_id'],
-    users: users
-   }
-  res.render('login', locals)
+  if (req.cookies['user_id']) {
+    res.redirect('/urls')
+  } else {
+    res.render('login')
+  }
 });
 
 app.post('/login', (req, res) => {
@@ -68,10 +79,10 @@ app.post('/login', (req, res) => {
   let password = req.body.password
   let user = checkEmail(email)
   let user_id = ""
-  if (user && (user.password === password)) {
+  if (user && (bcrypt.compareSync(password, user.password) || user.password === password)) {
     user_id = user.id
     let cookie = res.cookie('user_id', user_id)
-    res.redirect('/')
+    res.redirect('/urls')
   } else {
     res.sendStatus(403)
   }
@@ -84,12 +95,14 @@ app.post('/logout', (req, res) => {
 app.post('/register', (req, res) => {
   let email = req.body.email
   let password = req.body.password
+  let hashed_password = bcrypt.hashSync(password, 10);
   let user_id = generateRandomString()
   if (!checkEmail(email)) {
     users[user_id] = {
       id: user_id,
       email: email,
-      password: password
+      password: hashed_password,
+      urls:{}
     }
     let cookie = res.cookie('user_id', user_id)
     res.redirect('/')
@@ -105,23 +118,26 @@ app.get('/register', (req, res) => {
 
 app.get('/urls', (req, res) => {
   let locals = {
-    urls: urlDB,
     users: users,
     message: req.flash('info'),
     user_id: req.cookies['user_id']
-  }
+  };
   res.render('urls_index', locals)
 })
 
 app.get('/urls/new', (req, res) => {
-  let locals = { user_id: req.cookies['user_id'] }
+  let locals = {
+    user_id: req.cookies['user_id'],
+    users: users
+   }
   res.render('urls_new', locals)
 });
 
 app.post('/urls/create', (req, res) => {
   let longURL = req.body.longURL
   let shortURL = generateRandomString()
-  urlDB[shortURL] = longURL
+  let user_id = req.cookies['user_id']
+  users[user_id].urls[shortURL] = longURL
   res.redirect('/urls')
 })
 
@@ -131,7 +147,9 @@ app.get('/u/:shortURL', (req, res) => {
 })
 
 app.post('/urls/:id/delete', (req, res) => {
-  delete urlDB[req.params.id]
+  let user_id = req.cookies['user_id']
+  let urls = users[user_id].urls
+  delete urls[req.params.id]
   req.flash('info', 'Url Delete Successful!')
   res.redirect('/urls')
 })
@@ -146,7 +164,11 @@ app.get('/urls/:id', (req, res) => {
 })
 
 app.post('/urls/:id', (req, res) => {
-  urlDB[req.params.id] = req.body.updated_url
+  let user_id = req.cookies['user_id']
+  let urls = users[user_id].urls
+  for (url in urls) {
+    urls[req.params.id] = req.body.updated_url
+  }
   res.redirect('/urls')
 })
 

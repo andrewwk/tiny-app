@@ -3,14 +3,20 @@
   <head>
     <meta charset="utf-8">
     <title>Register for Andrew's Tiny App</title>
+    <link rel="stylesheet" href="/stylesheets/styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
   </head>
   <body>
-  <% include ./partials/_header.ejs %>
-  <div class="container-register">
-    <form class="" action="/register" method="post">
-      <input type="email" name="email" style="width: 60%">
-      <input type="password" name="password"  style="width: 60%">
-      <button type="submit" class="register-button">Submit</button>
+  <div class="container-login">
+    <h2>Register</h2>
+    <form action="/register" method="post">
+      <input type="email" name="email" placeholder="email" style="width: 60%; border-radius 10px">
+      <input type="password" name="password" placeholder="password" style="width: 60%; border-radius 10px">
+      <button type="submit" name="button" class="login-submit button" style="width: 60%; border-radius 10px">
+        Submit
+      </button>
     </form>
   </div>
   </body>

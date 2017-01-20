@@ -3,10 +3,15 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <link rel="stylesheet" href="/stylesheets/styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
   </head>
   <body>
-    <% include ./partials/_header.ejs %>
-    <% if (!user_id) { %>
+  <div class="container-header">
+    <h1>Andrew's Tiny App</h1>
+  </div>
       <div class="container-login">
           <h2>Login</h2>
         <form action="/login" method="post">
@@ -15,10 +20,9 @@
           <button type="submit" name="button" class="login-submit button" style="width: 60%">
             Submit
           </button>
+        </form>
       </div>
-    </form>
       <a href='/register' style="font-size: 2em">Register</a>
-    <% } %>
   </div>
 
 
