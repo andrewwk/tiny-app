@@ -65,6 +65,16 @@ const verifyShortURL = (shortURL) => {
   return verify;
 }
 
+const findLongURL = (shortURL) => {
+  let longURL = ''
+  for (key in users) {
+    if (users[key].urls[shortURL]) {
+      longURL = users[key].urls[shortURL]
+    }
+  }
+  return longURL
+}
+
 app.set('view engine', 'ejs')
 
 app.use(cookieSession({
@@ -155,7 +165,7 @@ app.get('/register', (req, res) => {
   if (req.session.user_id) {
     res.redirect('/')
   } else {
-    res.status(200)render('register', locals)
+    res.status(200).render('register', locals)
   }
 })
 
@@ -201,14 +211,12 @@ app.get('/urls/new', (req, res) => {
 })
 
 app.get('/u/:shortURL', (req, res) => {
-  let user_id = req.session.user_id
-  let urls    = users[user_id].urls
-  let longURL = urls[req.params.shortURL]
+  let longURL = findLongURL(req.params.shortURL)
   if (!longURL) {
     req.flash('info', '404: URL not found.')
     res.status(404).redirect('/error')
   } else {
-    res.redirect(longURL)
+    res.redirect(`${longURL}`)
   }
 })
 
