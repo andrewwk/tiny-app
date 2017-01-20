@@ -118,7 +118,7 @@ app.get('/register', (req, res) => {
 })
 
 app.get('/urls', (req, res) => {
-  let locals = {
+  const locals = {
     users: users,
     message: req.flash('info'),
     user_id: req.session.user_id
@@ -127,7 +127,7 @@ app.get('/urls', (req, res) => {
 })
 
 app.get('/urls/new', (req, res) => {
-  let locals = {
+  const locals = {
     user_id: req.session.user_id,
     users: users
    }
@@ -143,7 +143,9 @@ app.post('/urls/create', (req, res) => {
 })
 
 app.get('/u/:shortURL', (req, res) => {
-  let longURL = urlDB[req.params.shortURL]
+  let user_id = req.session.user_id
+  let urls = users[user_id].urls
+  let longURL = urls[req.params.shortURL]
   res.redirect(longURL)
 })
 
