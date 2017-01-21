@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <title>Andrew's Tiny App</title>
-  <link rel="stylesheet" href="/stylesheets/styles.css">
 </head>
 <body>
   <% include ./partials/_header.ejs %>
@@ -17,7 +16,7 @@
     </div>
       <form method="post" action="/urls/<%= locals.shortURL %>?_method=PUT"style="display:block;">
         <input type="text" name="updated_url" style="width: 85%%; height: 1.75em;" placeholder="<%= users[user_id].urls[shortURL] %>">
-        <button type="submit" name="button" style="display: inline-block" class="button">
+        <button type="submit" name="button" style="display: inline-block" class="button"  >
           <strong>Update</strong>
         </button>
       </form>
