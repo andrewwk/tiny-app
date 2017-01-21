@@ -13,17 +13,13 @@
     </form>
     <% if (user_id) { %>
       <form action="/logout" method="post">
-        <button type="submit" name="logout" class="nav-button">Logout</button>
+        <button type="submit" name="logout" class="material-icons nav-button ">lockLOGOUT</button>
       </form>
     <% } %>
   </div>
   <div class="container-header">
     <h1>Andrew's Tiny App</h1>
-    <% if (user_id) { %> %>
-      <div class="container-current-user">
-        Welcome: <%= locals.users[user_id].email %>
-      </div>
-    <% } %>
+
     <% if (!user_id) { %> %>
       <div class="container-current-user">
         <form action="/register" method="get">
@@ -35,4 +31,9 @@
       </div>
     <% } %>
   </div>
+  <% if (user_id) { %> %>
+    <div class="container-current-user">
+      Welcome: <%= locals.users[user_id].email %>
+    </div>
+  <% } %>
 </div>

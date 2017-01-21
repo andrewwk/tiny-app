@@ -11,19 +11,17 @@
       <strong><p><%= message %></p></strong>
       <% } %>
   </div>
-  <div class="container-update">
+  <div class="container-update" style="padding-top: 2em;">
     <div class="container-shorturl">
-      <h2>Short URL: <%= shortURL %></h2>
+      <h4>Short URL: <%= shortURL %></h4>
     </div>
-    <div class="">
       <form method="post" action="/urls/<%= locals.shortURL %>"style="display:block;">
-        <input type="text" name="updated_url" style="width: 80%" placeholder="<%= users[user_id].urls[shortURL] %>">
+        <input type="text" name="updated_url" style="width: 85%%; height: 1.75em;" placeholder="<%= users[user_id].urls[shortURL] %>">
         <button type="submit" name="button" style="display: inline-block" class="button">
           <strong>Update</strong>
         </button>
       </form>
-    </div>
-    <form method="post" action="/urls/<%= url %>/delete" style="display:block;">
+    <form method="post" action="/urls/<%= url %>/delete" style="display:block; padding-top: 1em;">
       <button type="submit" name="button" class="fa fa-trash" aria-hidden="true">
         <strong>Delete</strong>
       </button>
