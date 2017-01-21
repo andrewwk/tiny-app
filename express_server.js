@@ -1,11 +1,12 @@
-const express       = require('express')
-const cookieSession = require('cookie-session')
-const session       = require('express-session')
-const flash         = require('connect-flash')
-const bodyParser    = require('body-parser')
-const bcrypt        = require('bcrypt');
-const app           = express()
-const PORT          = process.env.PORT || 8080 // default port 8080
+const express        = require('express')
+const cookieSession  = require('cookie-session')
+const session        = require('express-session') //required for flash messages
+const flash          = require('connect-flash')   //creates flash messages
+const bodyParser     = require('body-parser')
+const methodOverride = require('method-override') //method overried to allow for put and delete
+const bcrypt         = require('bcrypt');
+const app            = express()
+const PORT           = process.env.PORT || 8080  // default port 8080
 
 const generateRandomString = () => {
   let text = ''
@@ -80,7 +81,7 @@ app.set('view engine', 'ejs')
 app.use(cookieSession({
   name: 'session',
   keys: ['supasecret_secret'],
-  maxAge: 60 * 60 * 1000 // 1 hour
+  maxAge: 60 * 60 * 1000
 }))
 app.use(session({
   cookie: { maxAge: 60000 },
@@ -89,6 +90,7 @@ app.use(session({
   saveUninitialized: false
 }))
 app.use(flash())
+app.use(methodOverride('_method'))
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -137,6 +139,15 @@ app.post('/logout', (req, res) => {
   res.redirect('/login')
 })
 
+app.get('/register', (req, res) => {
+  let locals = { user_id: req.session.user_id }
+  if (req.session.user_id) {
+    res.redirect('/')
+  } else {
+    res.status(200).render('register', locals)
+  }
+})
+
 app.post('/register', (req, res) => {
   let email = req.body.email
   let password = req.body.password
@@ -157,15 +168,6 @@ app.post('/register', (req, res) => {
   } else {
     req.flash('info', '400: Email is already registered')
     res.status(400).redirect('/error')
-  }
-})
-
-app.get('/register', (req, res) => {
-  let locals = { user_id: req.session.user_id }
-  if (req.session.user_id) {
-    res.redirect('/')
-  } else {
-    res.status(200).render('register', locals)
   }
 })
 
@@ -220,7 +222,7 @@ app.get('/u/:shortURL', (req, res) => {
   }
 })
 
-app.post('/urls/:id/delete', (req, res) => {
+app.delete('/urls/:id/delete', (req, res) => {
   let user_id = req.session.user_id
   let urls    = users[user_id].urls
   if (!verifyURLOwner(req.params.id, user_id)) {
@@ -254,7 +256,7 @@ app.get('/urls/:id', (req, res) => {
   }
 })
 
-app.post('/urls/:id', (req, res) => {
+app.put('/urls/:id', (req, res) => {
   let user_id = req.session.user_id
   let urls = users[user_id].urls
   if (req.body.updated_url.length < 1) {
@@ -267,6 +269,7 @@ app.post('/urls/:id', (req, res) => {
     for (url in urls) {
       urls[req.params.id] = req.body.updated_url
     }
+    req.flash('info', 'Great Success! URL has been updated!')
     res.redirect(`/urls/${req.params.id}`)
   }
 })
