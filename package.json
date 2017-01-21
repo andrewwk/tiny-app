@@ -1,14 +1,14 @@
 {
   "name": "tinyApp",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is a basic app for storing urls and shortening them.",
   "main": "index.js",
   "scripts": {
     "start": "node ./express_server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Andrew Kim",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^1.0.2",
