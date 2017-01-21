@@ -87,9 +87,13 @@ th, td {
 }
 
 .container-update .container-new-url, input {
-  width: 100%;
+  width: 80%;
   height: 3em;
 
+}
+
+.container-new-url {
+  padding-left: 15%;
 }
 
 .container-update .container-new-url, input[placeholder] {
