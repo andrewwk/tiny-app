@@ -1,7 +1,7 @@
 #Tiny App
 
 ### Description
-A three-day web app project using Node. The app will allow users to shorten long URLs much like TinyURL.com, bit.ly, and the like.
+A three-day web app project using Node. The app allows users to shorten long URLs much like TinyURL.com, bit.ly, and the like.
 Built with an HTTP Server to handle requests from the browser (client) along with Express
 
 ### Functional Requirements
